@@ -12,7 +12,7 @@ public class NewOrderMain {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         KafkaProducer<String, String> producer = new KafkaProducer<String, String>(properties());
-        String value = "12512, 45421, 98655";
+        String value = "Mensagem 1";
 
         ProducerRecord<String, String> record =
                 new ProducerRecord<String, String>("ECOMMERCE_NEW_ORDER", value, value);
