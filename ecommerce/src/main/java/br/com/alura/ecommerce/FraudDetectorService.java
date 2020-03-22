@@ -25,15 +25,15 @@ public class FraudDetectorService {
             records.forEach(allRecords::add);
 
             if (!allRecords.isEmpty()) {
-                System.out.println("Encontrei registros");
+                System.out.println("Encontrei registros !! ");
             }
 
             allRecords.forEach(rec -> {
-                System.out.println("Processing new order, checkinf for fraud ");
-                System.out.println("Key >>" +       rec.key());
-                System.out.println("Value >>" +     rec.value());
-                System.out.println("Partição >>" +  rec.partition());
-                System.out.println("Offset >>" +    rec.offset());
+                System.out.println("Processing new order, checking for fraud. ");
+                System.out.println("Key >> " +       rec.key());
+                System.out.println("Value >> " +     rec.value());
+                System.out.println("Partição >> " +  rec.partition());
+                System.out.println("Offset >> " +    rec.offset());
 
                 try {
                     Thread.sleep(5000);
@@ -42,9 +42,7 @@ public class FraudDetectorService {
                 }
                 System.out.println(" Order processed ");
             });
-
         }
-
     }
 
 
@@ -54,7 +52,8 @@ public class FraudDetectorService {
         properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, FraudDetectorService.class.getSimpleName());
         properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-
+        // Definindo um identificador para o consumer
+        properties.setProperty(ConsumerConfig.CLIENT_ID_CONFIG,FraudDetectorService.class.getSimpleName());
         return properties ;
     }
 

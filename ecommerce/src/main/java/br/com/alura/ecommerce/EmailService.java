@@ -29,7 +29,7 @@ public class EmailService {
             }
 
             allRecords.forEach(rec -> {
-                System.out.println("Processing new order, checkinf for fraud ");
+                System.out.println("Processing new order, checking for fraud ");
                 System.out.println("Key >>" +       rec.key());
                 System.out.println("Value >>" +     rec.value());
                 System.out.println("Partição >>" +  rec.partition());

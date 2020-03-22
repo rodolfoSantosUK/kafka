@@ -16,7 +16,7 @@ Criando topico
 
 Visualizar os topicos
 
-./bin/kafka-topics.sh --list --bootstrap-server localhost:9092
+./bin/kafka-topics.sh --list --bootstrap-server localhost:9092 --describe
 
 CRIANDO MENSAGENS
 
@@ -24,3 +24,20 @@ CRIANDO MENSAGENS
 
 CONSUMINDO MENSAGENS
 ./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic ECOMMERCE_NEW_ORDER --from-beginning
+
+AUMENTANDO O NUMERO DE PARTIÇÕES
+
+1 - Abrir o arquivo config e alterar a chave num.partitions:
+vi config/server.properties
+num.partitions = 3
+
+2 - Comando para visualizar os tópicos:
+./bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe
+
+3 - Alterar o número de partições do tópico
+./bin/kafka-topics.sh --alter --zookeeper localhost:2181 --topic ECOMMERCE_NEW_ORDER --partitions 3
+
+4 - Rodar o Producer e os dois Consumers
+
+5 - Comando para descrever os grupos de Consumers
+./bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe -all-groups
