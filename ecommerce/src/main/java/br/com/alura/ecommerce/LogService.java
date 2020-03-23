@@ -30,11 +30,11 @@ public class LogService {
 
     private void parse(ConsumerRecord<String, String> rec) {
             System.out.println("Processing logging  ");
-            System.out.println("LOG" + rec.topic());
-            System.out.println("Key >>" + rec.key());
-            System.out.println("Value >>" + rec.value());
-            System.out.println("Partição >>" + rec.partition());
-            System.out.println("Offset >>" + rec.offset());
+            System.out.println("LOG >> " + rec.topic());
+            System.out.println("Key >> " + rec.key());
+            System.out.println("Value >> " + rec.value());
+            System.out.println("Partição >> " + rec.partition());
+            System.out.println("Offset >> " + rec.offset());
   }
 
 }
