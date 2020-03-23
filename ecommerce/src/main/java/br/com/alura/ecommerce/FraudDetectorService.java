@@ -6,6 +6,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,11 +18,13 @@ public class FraudDetectorService {
     public static void main(String[] args) {
 
         FraudDetectorService fraudDetectorService = new FraudDetectorService();
-        KafkaService service = new KafkaService(  FraudDetectorService.class.getSimpleName(),
+        try(KafkaService service = new KafkaService(  FraudDetectorService.class.getSimpleName(),
                                            "ECOMMERCE_NEW_ORDER",
-                                                  fraudDetectorService :: parse);
-        service.run();
-
+                                                  fraudDetectorService :: parse)){
+            service.run();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void parse(ConsumerRecord<String, String> rec) {

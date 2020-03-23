@@ -6,6 +6,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,12 +16,13 @@ import java.util.concurrent.ExecutionException;
 
 public class EmailService {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         EmailService emailService = new EmailService();
-        KafkaService service = new KafkaService( EmailService.class.getSimpleName(),
+        try(KafkaService service = new KafkaService( EmailService.class.getSimpleName(),
                                           "ECOMMERCE_SEND_EMAIL",
-                                                 emailService :: parse);
-        service.run();
+                                                 emailService :: parse)){
+            service.run();
+        }
     }
 
     private void parse(ConsumerRecord<String, String> record) {
