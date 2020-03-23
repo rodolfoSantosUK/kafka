@@ -41,3 +41,21 @@ num.partitions = 3
 
 5 - Comando para descrever os grupos de Consumers
 ./bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --describe -all-groups
+
+DIRETORIO DO ZOOKEEPER E DO KAFKA
+
+1) Criar os diretorios abaixo
+mkdir data/zookeeper
+mkdir data/kafka
+
+2) No arquivo config apontar para esses diretorios:
+
+sudo gedit config/server.properties
+mudar o valor da chave log_dir para:
+log_dir = /home/rodolfo/dev/apps/kafka_2.11-2.4.0/data/kafka
+
+sudo gedit config/zookeeper.properties
+mudar o valor da chave dataDir para:
+dataDir = /home/rodolfo/dev/apps/kafka_2.11-2.4.0/data/zookeeper
+
+
