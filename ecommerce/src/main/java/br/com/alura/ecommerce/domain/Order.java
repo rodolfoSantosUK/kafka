@@ -5,11 +5,11 @@ import java.math.BigDecimal;
 public class Order {
 
     private final String userId, orderId;
-    private final BigDecimal amout;
+    private final BigDecimal amount;
 
-    public Order(String userId, String orderId, BigDecimal amout) {
+    public Order(String userId, String orderId, BigDecimal amount) {
         this.userId = userId;
         this.orderId = orderId;
-        this.amout = amout;
+        this.amount = amount;
     }
 }
