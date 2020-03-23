@@ -16,50 +16,26 @@ public class FraudDetectorService {
 
     public static void main(String[] args) {
 
-        KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(properties());
-        consumer.subscribe(Collections.singletonList("ECOMMERCE_NEW_ORDER"));
-        while(true) {
-            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
-            final List<ConsumerRecord<String, String>> allRecords = new ArrayList<>();
+        FraudDetectorService fraudDetectorService = new FraudDetectorService();
+        KafkaService service = new KafkaService(  FraudDetectorService.class.getSimpleName(),
+                                           "ECOMMERCE_NEW_ORDER",
+                                                  fraudDetectorService :: parse);
+        service.run();
 
-            records.forEach(allRecords::add);
+    }
 
-            if (!allRecords.isEmpty()) {
-                System.out.println("Encontrei registros !! ");
-            }
-
-            allRecords.forEach(rec -> {
-                System.out.println("Processing new order, checking for fraud. ");
-                System.out.println("Key >> " +       rec.key());
-                System.out.println("Value >> " +     rec.value());
-                System.out.println("Partição >> " +  rec.partition());
-                System.out.println("Offset >> " +    rec.offset());
-
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(" Order processed ");
-            });
+    private void parse(ConsumerRecord<String, String> rec) {
+        System.out.println("Processing new order, checking for fraud. ");
+        System.out.println("Key >> " +       rec.key());
+        System.out.println("Value >> " +     rec.value());
+        System.out.println("Partição >> " +  rec.partition());
+        System.out.println("Offset >> " +    rec.offset());
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+        System.out.println(" Order processed !! ");
     }
-
-
-    private static Properties properties() {
-        Properties properties = new Properties();
-        properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,  "127.0.0.1:9092");
-        properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, FraudDetectorService.class.getSimpleName());
-        properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        // Definindo um identificador para o consumer
-        properties.setProperty(ConsumerConfig.CLIENT_ID_CONFIG,FraudDetectorService.class.getSimpleName());
-        // O auto-commit acontence no consumo de 1 em 1 mensagens
-        // Isso aumenta as chances de evitar que consuma a mesma mensagem, porque nao deu tempo de enviar o commit
-        // para o kafka em um caso de rebanceamento por exemplo
-        properties.setProperty(ConsumerConfig.MAX_POLL_RECORDS_CONFIG,"1");
-        return properties ;
-    }
-
 
 }
