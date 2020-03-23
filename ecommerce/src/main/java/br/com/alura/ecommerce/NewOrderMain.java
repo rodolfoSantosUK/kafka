@@ -1,5 +1,6 @@
 package br.com.alura.ecommerce;
 
+import br.com.alura.ecommerce.domain.Email;
 import br.com.alura.ecommerce.domain.Order;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class NewOrderMain {
                 Order order = new Order(userId, orderId, amount);
                 dispatcher.send("ECOMMERCE_NEW_ORDER", userId, order);
 
-            try (KafkaDispatcher emailDispatcher = new KafkaDispatcher<String>()) {
+            try (KafkaDispatcher emailDispatcher = new KafkaDispatcher<Email>()) {
                 //        ENVIO DE EMAIL
                 String key = UUID.randomUUID().toString();
                 String value = "Mensagem : ";

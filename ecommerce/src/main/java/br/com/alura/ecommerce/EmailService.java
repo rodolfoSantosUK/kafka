@@ -8,9 +8,10 @@ public class EmailService {
 
     public static void main(String[] args) throws IOException {
         EmailService emailService = new EmailService();
-        try(KafkaService service = new KafkaService( EmailService.class.getSimpleName(),
+        try(KafkaConsumerService service = new KafkaConsumerService( EmailService.class.getSimpleName(),
                                           "ECOMMERCE_SEND_EMAIL",
-                                                 emailService :: parse)){
+                                                 emailService :: parse,
+                                                 String.class)){
             service.run();
         }
     }

@@ -1,5 +1,6 @@
 package br.com.alura.ecommerce;
 
+import br.com.alura.ecommerce.util.GsonDeserializer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -12,30 +13,30 @@ import java.time.Duration;
 import java.util.*;
 import java.util.regex.Pattern;
 
-public class KafkaService implements Closeable {
+public class KafkaConsumerService<T> implements Closeable {
 
-    private final KafkaConsumer<String, String> consumer;
+    private final KafkaConsumer<String, T> consumer;
     private final ConsumerFunction parse;
 
-    public KafkaService(ConsumerFunction parse, String groupId) {
+    public KafkaConsumerService(ConsumerFunction parse, String groupId, Class<T> type) {
         this.parse = parse;
-        this.consumer = new KafkaConsumer<String, String>(properties(groupId));
+        this.consumer = new KafkaConsumer<String, T>(properties(type, groupId));
     }
 
-     KafkaService(String groupId, String topic, ConsumerFunction parse) {
-        this(parse, groupId);
+     KafkaConsumerService(String groupId, String topic, ConsumerFunction parse, Class<T> type ) {
+        this(parse, groupId, type);
         consumer.subscribe(Collections.singletonList(topic));
     }
 
-    KafkaService(String groupId, Pattern topic, ConsumerFunction parse) {
-        this(parse, groupId);
+    KafkaConsumerService(String groupId, Pattern topic, ConsumerFunction parse, Class<T> type) {
+        this(parse, groupId, type);
         consumer.subscribe(topic);
     }
 
     void run() {
         while(true) {
-            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
-            final List<ConsumerRecord<String, String>> allRecords = new ArrayList<>();
+            ConsumerRecords<String, T> records = consumer.poll(Duration.ofMillis(100));
+            final List<ConsumerRecord<String, T>> allRecords = new ArrayList<>();
             records.forEach(allRecords::add);
 
             if (!allRecords.isEmpty()) {
@@ -47,11 +48,12 @@ public class KafkaService implements Closeable {
         }
     }
 
-    private static Properties properties(String groupId) {
+    private Properties properties(Class<T> type, String groupId) {
         Properties properties = new Properties();
         properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,  "127.0.0.1:9092");
         properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+        properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, GsonDeserializer.class.getName());
+        properties.setProperty(GsonDeserializer.TYPE_CONFIG, type.getName());
         // O auto-commit acontence no consumo de 1 em 1 mensagens
         // Isso aumenta as chances de evitar que consuma a mesma mensagem, porque nao deu tempo de enviar o commit
         // para o kafka em um caso de rebanceamento por exemplo
