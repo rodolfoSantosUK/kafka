@@ -18,6 +18,9 @@ Visualizar os topicos
 
 ./bin/kafka-topics.sh --list --bootstrap-server localhost:9092 --describe
 
+DESCREVER OS TOPICOS
+./bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe
+
 CRIANDO MENSAGENS
 
 ./bin/kafka-console-producer.sh --broker-list localhost:9092 --topic LOJA_NOVO_PEDIDO
