@@ -1,7 +1,5 @@
 package br.com.alura.ecommerce;
 
-import br.com.alura.ecommerce.domain.Email;
-import br.com.alura.ecommerce.domain.Order;
 
 import java.io.IOException;
 import java.math.BigDecimal;

@@ -6,8 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="service-fraud-detector" />
+        <module name="service-new-order" />
+        <module name="service-log" />
+        <module name="service-email" />
         <module name="br.com.alura" />
-        <module name="ecommerce" />
+        <module name="common-kafka" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8" />

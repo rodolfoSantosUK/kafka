@@ -1,6 +1,5 @@
 package br.com.alura.ecommerce;
 
-import br.com.alura.ecommerce.domain.Order;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
 import java.io.IOException;
@@ -15,8 +14,8 @@ public class FraudDetectorService {
         try(KafkaConsumerService service = new KafkaConsumerService<>(  FraudDetectorService.class.getSimpleName(),
                                            "ECOMMERCE_NEW_ORDER",
                                                   fraudDetectorService :: parse,
-                                                   Order.class,
-                                                   new HashMap<>())){
+                                                  Order.class,
+                                                  new HashMap<>())){
             service.run();
         } catch (IOException e) {
             e.printStackTrace();

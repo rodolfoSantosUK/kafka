@@ -1,6 +1,5 @@
 package br.com.alura.ecommerce;
 
-import br.com.alura.ecommerce.util.GsonDeserializer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
