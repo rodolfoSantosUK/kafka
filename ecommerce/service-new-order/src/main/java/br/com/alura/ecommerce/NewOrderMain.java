@@ -16,8 +16,11 @@ public class NewOrderMain {
                 String userId = UUID.randomUUID().toString();
                 String orderId = UUID.randomUUID().toString();
                 BigDecimal amount = new BigDecimal(Math.random() * 5000 + 1);
-                Order order = new Order(userId, orderId, amount);
-                dispatcher.send("ECOMMERCE_NEW_ORDER", userId, order);
+
+                String emailCode = "rodolfo@email.com";
+                
+                Order order = new Order(userId, orderId, amount, emailCode);
+                dispatcher.send("ECOMMERCE_NEW_ORDER", emailCode, order);
 
             try (KafkaDispatcher emailDispatcher = new KafkaDispatcher<Email>()) {
                 //        ENVIO DE EMAIL
@@ -25,7 +28,7 @@ public class NewOrderMain {
                 String value = "Mensagem : ";
                 String keyValue = value + key;
                 String email = "Thank you for your order! We are processing your order!";
-                emailDispatcher.send("ECOMMERCE_SEND_EMAIL", keyValue, email);
+                emailDispatcher.send("ECOMMERCE_SEND_EMAIL", email, emailCode);
             }
         }
     }
