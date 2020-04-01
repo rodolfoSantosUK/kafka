@@ -16,7 +16,7 @@ Criando topico
 
 Visualizar os topicos
 
-./bin/kafka-topics.sh --list --bootstrap-server localhost:9092 --describe
+./bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe
 
 DESCREVER OS TOPICOS
 ./bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe

@@ -60,7 +60,7 @@ public class FraudDetectorService {
 
 
     private boolean isFraud(Order order) {
-        return order.getAmount().compareTo(new BigDecimal("4500")) >=0;
+        return order.getAmount().compareTo(new BigDecimal("10")) >=0;
     }
 
 }

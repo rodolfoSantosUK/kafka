@@ -10,7 +10,7 @@ public class NewOrderMain {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException, IOException {
 
-//        Independente de dar erro ou não ele fai fechar a conexão atraves do metodo close
+//        Independente de dar erro ou não ele vai fechar a conexão atraves do metodo close
 //        da classe KafkaDispatcher
         try (KafkaDispatcher dispatcher = new KafkaDispatcher<Order>()) {
                 String userId = UUID.randomUUID().toString();

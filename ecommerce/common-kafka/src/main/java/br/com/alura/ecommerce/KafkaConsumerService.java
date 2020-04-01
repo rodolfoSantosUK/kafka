@@ -22,18 +22,16 @@ public class KafkaConsumerService<T> implements Closeable {
         this.parse = parse;
         this.consumer = new KafkaConsumer<String, T>(properties(type, groupId, extraProperties));
     }
-
-     KafkaConsumerService(String groupId, String topic, ConsumerFunction parse, Class<T> type, HashMap<String, String> extraProperties ) {
+    public KafkaConsumerService(String groupId, String topic, ConsumerFunction parse, Class<T> type, HashMap<String, String> extraProperties ) {
         this(parse, groupId, type, extraProperties);
         consumer.subscribe(Collections.singletonList(topic));
     }
-
-    KafkaConsumerService(String groupId, Pattern topic, ConsumerFunction parse, Class<T> type, HashMap<String, String> extraProperties) {
+    public KafkaConsumerService(String groupId, Pattern topic, ConsumerFunction parse, Class<T> type, HashMap<String, String> extraProperties) {
         this(parse, groupId, type, extraProperties);
         consumer.subscribe(topic);
     }
 
-    void run() {
+    public void run() {
         while(true) {
             ConsumerRecords<String, T> records = consumer.poll(Duration.ofMillis(100));
             final List<ConsumerRecord<String, T>> allRecords = new ArrayList<>();
@@ -44,9 +42,7 @@ public class KafkaConsumerService<T> implements Closeable {
                 for( ConsumerRecord record : records ) {
                     try {
                         parse.consume(record);
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }

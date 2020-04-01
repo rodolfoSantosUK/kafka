@@ -12,6 +12,7 @@
         <module name="service-email" />
         <module name="br.com.alura" />
         <module name="service-new-order" />
+        <module name="service-users" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8" />
