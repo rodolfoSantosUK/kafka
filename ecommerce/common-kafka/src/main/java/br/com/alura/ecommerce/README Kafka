@@ -61,4 +61,40 @@ sudo gedit config/zookeeper.properties
 mudar o valor da chave dataDir para:
 dataDir = /home/rodolfo/dev/apps/kafka_2.11-2.4.0/data/zookeeper
 
+REPLICANDO EM CLUSTER
 
+1) Criar cópia do arquivo server.properties
+cp config/server.properties config/server2.properties
+
+2) Editar o arquivo server2.properties
+
+sudo gedit config/server2.properties
+broker.id=2
+log.dirs= /home/rodolfo/dev/apps/kafka_2.11-2.4.0/data/kafka2
+listeners=PLAINTEXT://:9093
+
+3) Alterar o ReplicationFactor
+
+Editar o server.properties e o server2.properties
+
+sudo gedit config/server2.properties
+sudo gedit config/server.properties
+
+Adicionar a propriedade:
+default.replication.factor=2
+
+4) Parar todos os brokers e zookeeper e apagar conteudo das pastas kafka e kafka2
+sudo rm -fr kafka/*
+sudo rm -fr kafka2/*
+sudo rm -fr zookeeper/*
+
+5) Startar tudo
+
+sudo ./bin/zookeeper-server-start.sh ./config/zookeeper.properties
+sudo ./bin/kafka-server-start.sh ./config/server.properties
+sudo ./bin/kafka-server-start.sh ./config/server2.properties
+
+
+
+
+./bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe
