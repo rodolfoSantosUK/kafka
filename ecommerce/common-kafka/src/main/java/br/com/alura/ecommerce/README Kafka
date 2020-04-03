@@ -94,7 +94,32 @@ sudo ./bin/zookeeper-server-start.sh ./config/zookeeper.properties
 sudo ./bin/kafka-server-start.sh ./config/server.properties
 sudo ./bin/kafka-server-start.sh ./config/server2.properties
 
-
-
-
 ./bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe
+
+
+CLUSTER DE 5 BROKERS
+
+1) Alterar no server.properties
+offsets.topic.replication.factor=3
+transaction.state.log.replication.factor=3
+
+2) Criar mais brokers removendo o server2.properties
+
+rm server2.properties
+mv server.properties server1.properties
+cp server1.properties   server2.properties
+cp server1.properties   server3.properties
+cp server1.properties   server4.properties
+
+mudar o numero do broker, diretorio do data e a porta
+
+listeners=PLAINTEXT://:9091
+
+apagar os diretorios abaixo de data
+
+dev/apps/kafka_2.11-2.4.0/data$ sudo rm -fr ../*
+
+
+
+
+
