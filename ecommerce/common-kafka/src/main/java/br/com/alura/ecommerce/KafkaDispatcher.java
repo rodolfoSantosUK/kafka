@@ -29,7 +29,7 @@ public class KafkaDispatcher<T> implements Closeable {
         return properties;
     }
 
-    void send(String topic , String keyValue, T generic) throws ExecutionException, InterruptedException {
+    public void send(String topic, String keyValue, T generic) throws ExecutionException, InterruptedException {
         ProducerRecord<String, T> record =
                 new ProducerRecord<String, T>(topic, keyValue, generic);
         Callback callback = (data, ex) -> {
