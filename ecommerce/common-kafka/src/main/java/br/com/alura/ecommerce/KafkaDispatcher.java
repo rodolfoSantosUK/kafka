@@ -13,10 +13,10 @@ import java.util.concurrent.ExecutionException;
 
 public class KafkaDispatcher<T> implements Closeable {
 
-    private final KafkaProducer<String, T> producer;
+    private final KafkaProducer<String, Message<T>> producer;
 
    public KafkaDispatcher() {
-      this.producer = new KafkaProducer<String, T>(properties());
+      this.producer = new KafkaProducer<String, Message<T>>(properties());
     }
 
     private static Properties properties() {
@@ -29,9 +29,9 @@ public class KafkaDispatcher<T> implements Closeable {
         return properties;
     }
 
-    public void send(String topic, String keyValue, T generic) throws ExecutionException, InterruptedException {
-        ProducerRecord<String, T> record =
-                new ProducerRecord<String, T>(topic, keyValue, generic);
+    public void send(String topic, String keyValue, T payload) throws ExecutionException, InterruptedException {
+        Message<T> value = new Message<>(new CorrelationId(), payload );
+        ProducerRecord<String, Message<T>> record = new ProducerRecord<>(topic, keyValue, value);
         Callback callback = (data, ex) -> {
             if (ex != null) {
                 ex.printStackTrace();
