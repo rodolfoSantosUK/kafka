@@ -17,6 +17,6 @@ public class MessageAdapter  implements JsonSerializer<Message> {
         obj.add("payload", context.serialize(message.getPayload()) );
         obj.add("payload", context.serialize(message.getId()) );
 
-        return null;
+        return obj;
     }
 }
