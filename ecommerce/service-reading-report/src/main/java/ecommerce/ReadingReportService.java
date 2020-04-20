@@ -33,6 +33,7 @@ public class ReadingReportService {
     }
 
     private void parse(ConsumerRecord<String, User> rec) throws IOException {
+        System.out.println("------------------------------------------------------------");
         System.out.println("Processing record for " + rec.value());
 
         User user = rec.value();

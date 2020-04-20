@@ -1,0 +1,43 @@
+** Startando zookeeper **
+cd /home/rodolfo/dev/apps/Apache_kafka_2020/kafka_2.11-2.4.0
+sudo ./bin/zookeeper-server-start.sh config/zookeeper.properties
+
+** Startando kafka **
+cd /home/rodolfo/dev/apps/Apache_kafka_2020/kafka_2.11-2.4.0
+sudo ./bin/kafka-server-start.sh config/server.properties
+
+** Create input topic **
+cd /home/rodolfo/dev/apps/Apache_kafka_2020/kafka_2.11-2.4.0
+sudo ./bin/kafka-topics.sh --create  --zookeeper localhost:2181 \
+                           --replication-factor 1 --partitions 1 \
+                           --topic streams-wordcount-output
+
+sudo ./bin/kafka-topics.sh --create --zookeeper localhost:2181 \
+                           --replication-factor 1 --partitions 1 \
+                           --topic streams-plaintext-input
+
+** Ver topicos criados **
+cd /home/rodolfo/dev/apps/Apache_kafka_2020/kafka_2.11-2.4.0
+sudo ./bin/kafka-topics.sh --zookeeper localhost:2181 --list
+
+** Produzindo topicos **
+sudo ./bin/kafka-console-producer.sh --broker-list localhost:9092 --topic streams-plaintext-input
+kafka streams udemy
+kafka data processing
+kafka streams course
+
+** Consumindo tópicos **
+sudo ./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 \
+                                     --topic streams-plaintext-input --from-beginning
+
+** Kafka  streams **
+sudo ./bin/kafka-run-class.sh org.apache.kafka.streams.examples.wordcount.WordCountDemo
+
+Rodando envio de relatórios para todos os usuários
+
+1- Rodar HttpEcommerceService
+2 - Criar tópico USER_GENERATE_READING_REPORT
+sudo ./bin/kafka-topics.sh --create  --zookeeper localhost:2181 \
+                           --replication-factor 1 --partitions 1 \
+                           --topic USER_GENERATE_READING_REPORT
+3 - Rodar ReadingReportService

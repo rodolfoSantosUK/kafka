@@ -14,13 +14,13 @@ public class NewOrderMain {
 //        da classe KafkaDispatcher
 
 
-        for (int i=0; i<= 500; i++) {
+//        for (int i=0; i<= 500; i++) {
             try (KafkaDispatcher dispatcher = new KafkaDispatcher<Order>()) {
                     String userId = UUID.randomUUID().toString();
                     String orderId = UUID.randomUUID().toString();
                     BigDecimal amount = new BigDecimal(Math.random() * 5000 + 1);
 
-                    String emailCode = "rodolfo@email.com";
+                    String emailCode = "aranaldo@email.com";
 
                     Order order = new Order(userId, orderId, amount, emailCode);
                     dispatcher.send("ECOMMERCE_NEW_ORDER", emailCode, order);
@@ -35,5 +35,5 @@ public class NewOrderMain {
                 }
             }
         }
-    }
+//    }
 }

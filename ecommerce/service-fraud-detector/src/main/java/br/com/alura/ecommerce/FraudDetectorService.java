@@ -39,22 +39,22 @@ public class FraudDetectorService {
         }
 
         Order order  =  rec.value();
-        if(isFraud(order)) {
-           // Quando é maior de 4500
-            orderKafkaDispatcher.send("ECOMMERCE_ORDER_REJECTED",
-                                       order.getEmail(),
-                                       order );
-
-
-            System.out.println(" Order is fraud !! ");
-        } else {
-
-            orderKafkaDispatcher.send("ECOMMERCE_ORDER_APROVED",
-                    order.getEmail(),
-                    order );
-
-            System.out.println( "Aproved: " + order);
-        }
+//        if(isFraud(order)) {
+//           // Quando é maior de 4500
+//            orderKafkaDispatcher.send("ECOMMERCE_ORDER_REJECTED",
+//                                       order.getEmail(),
+//                                       order );
+//
+//
+//            System.out.println(" Order is fraud !! ");
+//        } else {
+//
+//            orderKafkaDispatcher.send("ECOMMERCE_ORDER_APROVED",
+//                    order.getEmail(),
+//                    order );
+//
+//            System.out.println( "Aproved: " + order);
+//        }
     }
 
 

@@ -1,0 +1,5 @@
+[2020-04-18 12:53:10,117] INFO Accepted socket connection from /127.0.0.1:47128 (org.apache.zookeeper.server.NIOServerCnxnFactory)
+[2020-04-18 12:53:10,119] INFO Client attempting to establish new session at /127.0.0.1:47128 (org.apache.zookeeper.server.ZooKeeperServer)
+[2020-04-18 12:53:10,122] INFO Established session 0x1718ced7497000b with negotiated timeout 30000 for client /127.0.0.1:47128 (org.apache.zookeeper.server.ZooKeeperServer)
+[2020-04-18 12:53:10,138] INFO Processed session termination for sessionid: 0x1718ced7497000b (org.apache.zookeeper.server.PrepRequestProcessor)
+[2020-04-18 12:53:10,139] INFO Closed socket connection for client /127.0.0.1:47128 which had sessionid 0x1718ced7497000b (org.apache.zookeeper.server.NIOServerCnxn)
